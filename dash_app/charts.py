@@ -1,0 +1,25 @@
+import plotly.express as px
+import pandas as pd
+
+def get_top_channels_chart(summary):
+    data = summary.get("most_frequent_channels", {})
+    df = pd.DataFrame(data.items(), columns=["Channel", "Count"])
+    fig = px.bar(df, x="Channel", y="Count", title="Top 5 Most Frequent Channels", color="Channel")
+    return fig
+
+def get_avg_views_by_category_chart(summary):
+    data = summary.get("avg_views_per_category", {})
+    df = pd.DataFrame(data.items(), columns=["Category ID", "Avg Views"])
+    fig = px.bar(df, x="Category ID", y="Avg Views", title="Average Views by Category ID", color="Avg Views")
+    return fig
+
+def get_top_tags_list(summary):
+    tags = summary.get("top_tags", {})
+    sorted_tags = sorted(tags.items(), key=lambda x: x[1], reverse=True)
+    return sorted_tags[:10]
+
+def get_engagement_info(summary):
+    return summary.get("top_engagement_video", {})
+
+def get_like_to_view_ratio(summary):
+    return summary.get("avg_like_to_view_ratio", 0)
