@@ -89,8 +89,4 @@ Built by [Frimpong Atta Junior Osei](https://github.com/attajunyah)
 
 ## 🛡️ MIT License
 
-
-```
----
-
 Let me know once it's live, and we’ll jump into the **Trend Tracker website build**!
