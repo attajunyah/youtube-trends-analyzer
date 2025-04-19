@@ -66,7 +66,6 @@ Visit `http://127.0.0.1:8050` in your browser.
 ├── analyze_trends.py        # Analyze and summarize trends
 ├── dashboard.py             # Interactive Plotly Dash dashboard
 ├── .env                     # API and DB credentials (not tracked)
-├── .env.example             # Example environment file
 ├── .gitignore
 └── README.md
 ```
