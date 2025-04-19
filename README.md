@@ -1,5 +1,7 @@
 # 📊 YouTube Trends Analyzer
 
+![Dashboard Screenshot](./images/dashboard_preview.png)
+
 An end-to-end data engineering project that fetches, processes, analyzes, and visualizes real-time YouTube trending data using Python, MongoDB, Dash, and Mistral AI. It combines raw data ingestion with smart analytics and LLM-powered summaries to deliver a dynamic, interactive dashboard that uncovers what’s trending and why — all automated and ready for scale.
 
 
@@ -83,6 +85,8 @@ Visit `http://127.0.0.1:8050` in your browser.
 ```
 
 ### 🧠 LLM-Powered Summaries
+
+![Ai Summary Screenshot](./images/ai_summary.png)
 
 This project uses **Mistral AI** to automatically generate a weekly summary of YouTube trending video insights.
 
