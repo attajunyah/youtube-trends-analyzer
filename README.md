@@ -1,19 +1,23 @@
 # 📊 YouTube Trends Analyzer
 
-A mini data engineering project that fetches, processes, analyzes, and visualizes trending YouTube videos using Python, MongoDB, and Dash.
+An end-to-end data engineering project that fetches, processes, analyzes, and visualizes real-time YouTube trending data using Python, MongoDB, Dash, and Mistral AI. It combines raw data ingestion with smart analytics and LLM-powered summaries to deliver a dynamic, interactive dashboard that uncovers what’s trending and why — all automated and ready for scale.
+
 
 ---
 
 ## 🔧 Features
 
-- ✅ Fetches trending videos from the YouTube Data API
-- ✅ Stores raw data in MongoDB Atlas
-- ✅ Cleans and normalizes video metadata using pandas
-- ✅ Generates insights (top channels, tags, engagement)
-- ✅ Stores summaries in a separate MongoDB collection
-- ✅ Interactive dashboard with Plotly Dash
+- ✅ Fetches trending videos from the YouTube Data API (up to 200)
+- ✅ Stores raw and cleaned data in MongoDB Atlas
+- ✅ Cleans and normalizes video metadata using `pandas`
+- ✅ Generates deep insights (top channels, tags, engagement, category stats)
+- ✅ Stores trend summaries in a separate MongoDB collection
+- ✅ Generates natural-language weekly summaries using **Mistral AI**
+- ✅ Displays LLM-generated summaries directly on the dashboard
+- ✅ Exports raw data to `.json` for backup or external tools
+- ✅ Interactive dashboard with Plotly Dash and Bootstrap styling
+- ✅ Ready for automation, file export, and multilingual expansion
 
----
 
 ## 🚀 Quick Start
 
@@ -61,14 +65,50 @@ Visit `http://127.0.0.1:8050` in your browser.
 
 ```
 📦 youtube-trends-analyzer
-├── fetch_trending.py        # Fetch trending videos from YouTube API
-├── clean_trending.py        # Clean and normalize raw data
-├── analyze_trends.py        # Analyze and summarize trends
-├── dashboard.py             # Interactive Plotly Dash dashboard
-├── .env                     # API and DB credentials (not tracked)
+├── fetch_trending.py           # Fetch trending videos from YouTube API
+├── clean_trending.py           # Clean and normalize raw data
+├── analyze_trends.py           # Analyze and summarize trends
+├── deep_analysis_trending.py   # Fetch and analyze 200 trending videos
+├── llm_summarize.py            # Generate natural language summaries using Mistral AI
+├── deep_trending_videos.json   # Exported raw trending data
+├── dash_app/
+│   ├── app.py                  # Dash app entry point
+│   ├── layout.py               # Dashboard layout and styling
+│   ├── charts.py               # Plotly visualizations for analysis
+│   └── utils.py                # MongoDB utility functions
+├── .env                        # Environment variables (excluded from Git)
 ├── .gitignore
 └── README.md
+
 ```
+
+### 🧠 LLM-Powered Summaries
+
+This project uses **Mistral AI** to automatically generate a weekly summary of YouTube trending video insights.
+
+#### How It Works:
+- Connects to MongoDB summary data (`trending_summary_deep`)
+- Generates a natural language report using `mistral-large-latest`
+- Summary is saved back to the DB and displayed on the dashboard
+
+#### Example Output:
+```
+This week on YouTube, we've seen some exciting trends and top performers!
+
+- Top Channels: ...
+- Categories with High Views: ...
+- Most Engaging Video: ...
+```
+
+---
+
+### 🔍 File Overview
+
+| File | Description |
+|------|-------------|
+| `llm_summarize.py` | Fetches trend summary and uses Mistral AI to write a weekly report |
+| `dash_app/utils.py` | Now includes `get_llm_summary()` to fetch the report |
+| `dash_app/layout.py` | Shows the LLM summary in a styled Dash card |
 
 ---
 
