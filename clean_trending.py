@@ -1,12 +1,15 @@
 from pymongo import MongoClient
 import certifi
 import pandas as pd
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
 
 # === Connect to MongoDB ===
-client = MongoClient(
-    "mongodb+srv://mikexzibit25:uojFHj9cqd556EVD@youtube-trends-cluster.yo4njp6.mongodb.net/?retryWrites=true&w=majority&appName=Youtube-Trends-Cluster",
-    tlsCAFile=certifi.where()
-)
+client = MongoClient(MONGO_URI,tlsCAFile=certifi.where())
 db = client["youtube_trends"]
 raw_collection = db["trending_videos"]
 clean_collection = db["cleaned_videos"]

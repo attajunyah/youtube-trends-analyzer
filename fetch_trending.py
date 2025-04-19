@@ -1,9 +1,16 @@
 import requests
 import json
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+API_KEY = os.getenv("YOUTUBE_API_KEY")
+MONGO_URI = os.getenv("MONGO_URI")
+
 
 # === CONFIG ===
-API_KEY = "AIzaSyDbTBgqfR5m_FLJHmEvBS7QS9_JVVFGWsE"  # Replace this with your actual key
 REGION = "US"
 MAX_RESULTS = 50
 
@@ -29,7 +36,7 @@ if response.status_code == 200:
     print(f"[✓] Fetched {len(data)} trending videos for {REGION}")
 
     # === INSERT INTO MONGODB ===
-    client = MongoClient("mongodb+srv://mikexzibit25:uojFHj9cqd556EVD@youtube-trends-cluster.yo4njp6.mongodb.net/?retryWrites=true&w=majority&appName=Youtube-Trends-Cluster")
+    client = MongoClient(MONGO_URI)
     db = client["youtube_trends"]
     collection = db["trending_videos"]
 
