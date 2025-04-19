@@ -87,20 +87,10 @@ Built by [Frimpong Atta Junior Osei](https://github.com/attajunyah)
 
 ---
 
-## 🛡️ License
+## 🛡️ MIT License
 
-MIT
+
 ```
-
----
-
-### 📤 4. **Add, Commit & Push**
-```bash
-git add README.md
-git commit -m "Add custom project README"
-git push origin main
-```
-
 ---
 
 Let me know once it's live, and we’ll jump into the **Trend Tracker website build**!
