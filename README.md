@@ -69,20 +69,27 @@ Visit `http://127.0.0.1:8050` in your browser.
 
 ```
 📦 youtube-trends-analyzer
-├── fetch_trending.py           # Fetch trending videos from YouTube API
-├── clean_trending.py           # Clean and normalize raw data
-├── analyze_trends.py           # Analyze and summarize trends
-├── deep_analysis_trending.py   # Fetch and analyze 200 trending videos
-├── llm_summarize.py            # Generate natural language summaries using Mistral AI
-├── deep_trending_videos.json   # Exported raw trending data
-├── dash_app/
-│   ├── app.py                  # Dash app entry point
-│   ├── layout.py               # Dashboard layout and styling
-│   ├── charts.py               # Plotly visualizations for analysis
-│   └── utils.py                # MongoDB utility functions
-├── .env                        # Environment variables (excluded from Git)
+├── fetch_trending.py             # Fetch top 50 trending videos (Basic)
+├── clean_trending.py             # Clean basic trending data
+├── analyze_trends.py             # Analyze basic data and store insights
+├── deep_analysis_trending.py     # Fetch & analyze 200 videos (Deep mode)
+├── llm_summarize.py              # Generate LLM summaries using Mistral AI
+├── dashboard.py                  # Legacy dashboard version (basic only)
+├── deep_trending_videos.json     # Exported JSON for deep mode
+├── trending_videos.json          # Exported JSON for basic mode
+├── .env                          # Environment variables (API keys, DB URI)
 ├── .gitignore
-└── README.md
+├── README.md
+├── images/
+│   ├── dashboard_preview.png     # Dashboard UI screenshot
+│   ├── ai_summary.png            # LLM summary sample screenshot
+│   └── dashboard_toggle.png      # Dataset dropdown toggle screenshot
+└── dash_app/
+    ├── app.py                    # Dash app main entry (dynamic and styled)
+    ├── layout.py                 # Layout structure including filters, summary
+    ├── charts.py                 # All chart rendering logic (Plotly Express)
+    └── utils.py                  # Helper to pull data from MongoDB
+
 
 ```
 
