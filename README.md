@@ -10,15 +10,17 @@ An end-to-end data engineering project that fetches, processes, analyzes, and vi
 ## 🔧 Features
 
 - ✅ Fetches trending videos from the YouTube Data API (up to 200)
+- ✅ Switch between **Basic (50 videos)** and **Deep (200 videos)** in dashboard
 - ✅ Stores raw and cleaned data in MongoDB Atlas
 - ✅ Cleans and normalizes video metadata using `pandas`
 - ✅ Generates deep insights (top channels, tags, engagement, category stats)
 - ✅ Stores trend summaries in a separate MongoDB collection
-- ✅ Generates natural-language weekly summaries using **Mistral AI**
-- ✅ Displays LLM-generated summaries directly on the dashboard
-- ✅ Exports raw data to `.json` for backup or external tools
-- ✅ Interactive dashboard with Plotly Dash and Bootstrap styling
-- ✅ Ready for automation, file export, and multilingual expansion
+- ✅ Generates natural-language summaries with **Mistral AI**
+- ✅ Displays LLM summaries directly in the dashboard UI
+- ✅ Exports data to `.json` for backups and external analysis
+- ✅ Interactive dashboard with **Plotly Dash** + Bootstrap themes
+- ✅ Ready for automation via Airflow or scheduling tools
+
 
 
 ## 🚀 Quick Start
@@ -115,6 +117,11 @@ This week on YouTube, we've seen some exciting trends and top performers!
 | `dash_app/layout.py` | Shows the LLM summary in a styled Dash card |
 
 ---
+
+## 🌐 Live Demo
+
+Coming soon...
+
 
 ## 🧠 Powered By
 
