@@ -20,21 +20,12 @@ def create_dashboard_layout(app):
     llm_summary = get_llm_summary()
 
     return dbc.Container([
-        # Theme toggle
-        dcc.Store(id="theme-store"),
         dbc.NavbarSimple(
             brand="📊 YouTube Trend Tracker",
+            brand_style={"margin": "auto", "text-align": "center", "fontSize": "1.5rem"},
             color="primary",
             dark=True,
-            sticky="top",
-            children=[
-                dbc.Switch(
-                    id="theme-toggle",
-                    label="Dark Mode",
-                    value=False,
-                    style={"color": "white", "marginLeft": "20px"}
-                )
-            ]
+            sticky="top"
         ),
 
         dbc.Row([
