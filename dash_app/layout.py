@@ -62,40 +62,21 @@ def create_dashboard_layout(app):
                     placeholder="Select category"
                 )
             ], width=3),
-        ], className="mt-4"),
-
-        dbc.Row([
             dbc.Col([
-                html.H4("Top 5 Most Frequent Channels", className="mt-4"),
-                dcc.Graph(figure=top_channels_fig)
-            ], width=6),
-            dbc.Col([
-                html.H4("Average Views by Category ID", className="mt-4"),
-                dcc.Graph(figure=category_views_fig)
-            ], width=6)
-        ]),
-
-        dbc.Row([
-            dbc.Col([
-                html.H4("Top 10 Tags", className="mt-4"),
-                html.Ul([html.Li(f"{tag}: {count}") for tag, count in top_tags])
-            ], width=4),
-            dbc.Col([
-                html.H4("Avg Like-to-View Ratio ❤️", className="mt-4"),
-                html.H2(f"{ratio:.4f}", className="text-center text-success")
-            ], width=4),
-            dbc.Col([
-                html.H4("🔥 Most Engaging Video", className="mt-4"),
-                html.P(f"Title: {engagement.get('title', 'N/A')}"),
-                html.P(f"Channel: {engagement.get('channel', 'N/A')}"),
-                html.P(f"Likes: {engagement.get('likes', 0):,}"),
-                html.P(f"Comments: {engagement.get('comments', 0):,}")
-            ], width=4)
-        ]), 
-
-        dbc.Card([
-            dbc.CardHeader("🧠 AI-Powered Weekly Summary"),
-            dbc.CardBody(dcc.Markdown(llm_summary))
-        ], color="light", outline=True, className="mt-4")
+                html.Label("📊 Choose Data Source"),
+                dcc.Dropdown(
+                    id="data-mode",
+                    options=[
+                        {"label": "Basic (50 videos)", "value": "basic"},
+                        {"label": "Deep (200 videos)", "value": "deep"}
+                    ],
+                    value="deep",  # default mode
+                    clearable=False,
+                    style={"width": "300px"}
+                )
+            ], width=3),
+        ], className="my-3"),
+        html.Div(id="your-charts-container"),
     ], fluid=True)
+
 

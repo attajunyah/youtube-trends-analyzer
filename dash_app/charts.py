@@ -9,9 +9,37 @@ def get_top_channels_chart(summary):
 
 def get_avg_views_by_category_chart(summary):
     data = summary.get("avg_views_per_category", {})
-    df = pd.DataFrame(data.items(), columns=["Category ID", "Avg Views"])
-    fig = px.bar(df, x="Category ID", y="Avg Views", title="Average Views by Category ID", color="Avg Views")
+    records = []
+
+    for cat_id, value in data.items():
+        # Handle both formats: nested dict OR single float
+        if isinstance(value, dict):
+            for stat_name, stat_val in value.items():
+                records.append({
+                    "Category ID": cat_id,
+                    "Metric": stat_name.capitalize(),
+                    "Value": stat_val
+                })
+        else:
+            records.append({
+                "Category ID": cat_id,
+                "Metric": "Average",
+                "Value": value
+            })
+
+    df = pd.DataFrame(records)
+
+    fig = px.bar(
+        df,
+        x="Category ID",
+        y="Value",
+        color="Metric",
+        barmode="group",
+        title="Category-wise Views (Mean, Median, Max, Min)"
+    )
     return fig
+
+
 
 def get_top_tags_list(summary):
     tags = summary.get("top_tags", {})

@@ -48,7 +48,7 @@ def analyze_and_store(data):
     df = pd.json_normalize(data)
 
     # Basic validation
-    df = df[df["statistics.viewCount"].notna()]  # Drop rows with missing views
+    df = df[df["statistics.viewCount"].notna()]
     df["views"] = df["statistics.viewCount"].astype(int)
     df["likes"] = pd.to_numeric(df["statistics.likeCount"], errors='coerce').fillna(0).astype(int)
     df["comments"] = pd.to_numeric(df["statistics.commentCount"], errors='coerce').fillna(0).astype(int)
@@ -58,10 +58,19 @@ def analyze_and_store(data):
     df["tags"] = df["snippet.tags"]
 
     # Channel frequency
-    top_channels = df["channel"].value_counts().head(10).to_dict()
+    most_frequent_channels = df["channel"].value_counts().head(10).to_dict()
 
-    # Category views
-    avg_views_by_category = df.groupby("category_id")["views"].agg(["mean", "median", "max", "min"]).to_dict()
+    # Category views (flattened format)
+    agg_df = df.groupby("category_id")["views"].agg(["mean", "median", "max", "min"])
+    avg_views_per_category = {
+        str(cat): {
+            "mean": round(row["mean"], 2),
+            "median": round(row["median"], 2),
+            "max": int(row["max"]),
+            "min": int(row["min"])
+        }
+        for cat, row in agg_df.iterrows()
+    }
 
     # Tags
     tag_counter = Counter()
@@ -81,11 +90,11 @@ def analyze_and_store(data):
     collection.drop()
     collection.insert_many(data)
 
-    # Store summary
+    # Store summary with standardized keys
     summary_collection.drop()
     summary_doc = {
-        "top_channels": top_channels,
-        "avg_views_by_category": avg_views_by_category,
+        "most_frequent_channels": most_frequent_channels,
+        "avg_views_per_category": avg_views_per_category,
         "top_tags": top_tags,
         "top_engagement_video": {
             "title": top_engaged.get("snippet.title"),
@@ -101,9 +110,6 @@ def analyze_and_store(data):
     print("[✓] Deep summary saved to 'trending_summary_deep'")
 
 
-
-
-
 # === Main Execution ===
 if __name__ == "__main__":
     print("📥 Fetching up to 200 trending videos...")
@@ -111,13 +117,13 @@ if __name__ == "__main__":
     print(f"[✓] Fetched {len(videos)} videos")
     analyze_and_store(videos)
     print("📊 Analysis complete.")
-    # === Optional: Export deep trending data to JSON ===
+
+    # Optional: Export raw data to JSON
     json_export_path = "deep_trending_videos.json"
-    # Remove MongoDB ObjectId (_id) if present
     for video in videos:
-        if "_id" in video:
-            del video["_id"]
+        video.pop("_id", None)
 
     with open(json_export_path, "w") as f:
         json.dump(videos, f, indent=2)
+
     print(f"[✓] Exported raw data to {json_export_path}")

@@ -15,11 +15,14 @@ MONGO_URI = os.getenv("MONGO_URI")
 # === Connect to MongoDB ===
 mongo = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 db = mongo["youtube_trends"]
-summary = db["trending_summary_deep"].find_one()
 
-# === Remove _id ===
-if "_id" in summary:
-    del summary["_id"]
+# === Dynamic Summary Fetcher ===
+def get_summary_data(mode="deep"):
+    collection_name = "trending_summary_deep" if mode == "deep" else "trending_summary"
+    summary = db[collection_name].find_one()
+    if summary and "_id" in summary:
+        del summary["_id"]
+    return summary
 
 # === Format summary as prompt ===
 def create_prompt(summary):
@@ -55,13 +58,20 @@ def generate_summary(prompt):
     return chat_response.choices[0].message.content.strip()
 
 # === Generate and store summary ===
-if __name__ == "__main__":
-    print("🤖 Generating LLM-powered summary...")
+def run_llm_for_mode(mode):
+    print(f"\n🤖 Generating LLM-powered summary for {mode} mode...")
+    summary = get_summary_data(mode)
     prompt = create_prompt(summary)
     llm_summary = generate_summary(prompt)
 
-    db["trending_summary_deep"].update_one({}, {"$set": {"llm_summary": llm_summary}})
+    collection_name = "trending_summary_deep" if mode == "deep" else "trending_summary"
+    db[collection_name].update_one({}, {"$set": {"llm_summary": llm_summary}})
 
-    print("[✓] LLM summary saved to 'trending_summary_deep' → llm_summary")
+    print(f"[✓] LLM summary saved to '{collection_name}' → llm_summary")
     print("\n📄 Summary Preview:\n")
     print(llm_summary)
+
+# === Run for both modes ===
+if __name__ == "__main__":
+    run_llm_for_mode("basic")
+    run_llm_for_mode("deep")
